@@ -126,11 +126,11 @@ defmodule Prove do
   The `description` is added to every `prove` in the `batch`.
   """
   defmacro batch(description, do: {:__block__, _, block}) do
-    quote_batch(description, block)
+    {:__block__, [], quote_batch(description, block)}
   end
 
   defmacro batch(description, do: block) when is_tuple(block) do
-    quote_batch(description, [block])
+    {:__block__, [], quote_batch(description, [block])}
   end
 
   defp quote_batch(description, block) do
@@ -141,7 +141,7 @@ defmodule Prove do
       {:prove, _, [prove_description, prove]} ->
         quote_prove("#{description} #{prove_description}", prove)
 
-      _ ->
+      _expr ->
         raise ArgumentError, message: "A batch can only contain proves"
     end)
   end
