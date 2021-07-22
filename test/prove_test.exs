@@ -67,7 +67,7 @@ defmodule ProveTest do
              "test check/1: Num.check(2) == :even": 1,
              "test check/1: big-num: Num.check(999999999) == :odd": 1,
              "test context": 1,
-             "test prove with different operators "abcd" =~ "bc"": 1,
+             "test prove with different operators \"abcd\" =~ \"bc\"": 1,
              "test prove with different operators identity(5) != 1": 1,
              "test prove with different operators identity(5) !== 1": 1,
              "test prove with different operators identity(5) < 10": 1,
