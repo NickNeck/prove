@@ -125,35 +125,52 @@ defmodule Prove do
 
   The `description` is added to every `prove` in the `batch`.
   """
-  defmacro batch(description, do: {:__block__, _, block}) do
-    {:__block__, [], quote_batch(description, block)}
+  defmacro batch(description, do: {:__block__, _meta, block}) do
+    {:__block__, [], quote_block(description, block)}
   end
 
   defmacro batch(description, do: block) when is_tuple(block) do
-    {:__block__, [], quote_batch(description, [block])}
+    {:__block__, [], quote_block(description, [block])}
   end
 
-  defp quote_batch(description, block) do
-    Enum.map(block, fn
-      {:prove, _, [prove]} ->
-        quote_prove(description, prove)
+  defp quote_block(description, block) do
+    Enum.reduce(block, {[], []}, fn
+      {:prove, _meta, [prove]}, {proves, exprs} ->
+        prove = quote_prove(description, prove, Enum.reverse(exprs))
+        {[prove | proves], exprs}
 
-      {:prove, _, [prove_description, prove]} ->
-        quote_prove("#{description} #{prove_description}", prove)
+      {:prove, _meta, [prove_description, prove]}, {proves, exprs} ->
+        prove = quote_prove("#{description} #{prove_description}", prove, Enum.reverse(exprs))
+        {[prove | proves], exprs}
 
-      _expr ->
-        raise ArgumentError, message: "A batch can only contain proves"
+      expr, {proves, exprs} ->
+        {proves, [expr | exprs]}
     end)
+    |> elem(0)
+    |> Enum.reverse()
   end
 
-  defp quote_prove(description, {operator, _, [_, _]} = expr)
+  defp quote_prove(description, {operator, _, [_, _]} = expr, exprs \\ [])
        when is_binary(description) and operator in @operators do
     quote do
       test unquote(name(description, Macro.to_string(expr))) do
-        assert unquote(expr)
+        unquote(exprs)
+        unquote(quote_assert(expr))
       end
     end
   end
+
+  defp quote_assert({op, meta, [left, right]} = expr) do
+    quote do
+      assert unquote(expr),
+        message: "Prove with #{to_string(unquote(op))} failed",
+        left: unquote(left),
+        right: unquote(right)
+    end
+    |> put_meta(meta)
+  end
+
+  defp put_meta({marker, _, children}, meta), do: {marker, meta, children}
 
   defp name("", b), do: b
   defp name(a, b), do: "#{a} #{b}"
