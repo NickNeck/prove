@@ -6,7 +6,7 @@ defmodule Prove.MixProject do
   def project do
     [
       app: :prove,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.10",
       name: "Prove",
       description: description(),
@@ -37,7 +37,7 @@ defmodule Prove.MixProject do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.25", only: :dev, runtime: false}
     ]
   end
 end

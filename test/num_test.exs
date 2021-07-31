@@ -30,4 +30,22 @@ defmodule NumTest do
       prove Num.check(nil) == :error
     end
   end
+
+  # The example above with regular `test`s:
+  # describe "check/1" do
+  #   test "returns :zero" do
+  #     assert Num.check(0) == :zero
+  #   end
+
+  #   test "returns :odd or :even" do
+  #     assert Num.check(1) == :odd
+  #     assert Num.check(2) == :even
+  #     assert Num.check(2_000) == :even
+  #   end
+
+  #   test "returns :error" do
+  #     assert Num.check("1") == :error
+  #     assert Num.check(nil) == :error
+  #   end
+  # end
 end
