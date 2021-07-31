@@ -1,9 +1,14 @@
 defmodule Prove do
   @moduledoc """
-  Prove provides the macros `prove` and `batch` to write simple tests shorter.
+  Prove provides the macros `prove` and `batch` to write simple tests in `ExUnit`
+  shorter.
 
   A `prove` is just helpful for elementary tests. Prove generates one test with
   one assert for every `prove`.
+
+  The disadvantage of these macros is that the tests are containing fewer
+  descriptions. For this reason and also if a `prove` looks too complicated, a
+  regular `test` is to prefer.
 
   ## Example
 
