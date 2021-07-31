@@ -5,4 +5,4 @@
 
 Prove provides the macros `prove` and `batch` to write simple tests shorter.
 
-For usage and examples see [documentation](https://hexdocs.pm/prove/Prove.html).
+For usage and examples, see the [documentation](https://hexdocs.pm/prove/Prove.html).

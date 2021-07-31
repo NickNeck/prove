@@ -52,30 +52,31 @@ defmodule ProveTest do
     end
   end
 
-  test "context" do
-    assert __MODULE__.__info__(:functions) == [
-             __ex_unit__: 0,
-             __ex_unit__: 2,
-             "test batch/2 all together now can I have a little more? identity(5) > 4": 1,
-             "test batch/2 all together now identity(5) > 1": 1,
-             "test batch/2 all together now identity(5) > 2": 1,
-             "test batch/2 all together now identity(5) > 3": 1,
-             "test batch/2 one identity(5) > 1": 1,
-             "test check/1: Num.check(-1) == :neg": 1,
-             "test check/1: Num.check(0) == :zero": 1,
-             "test check/1: Num.check(1) == :odd": 1,
-             "test check/1: Num.check(2) == :even": 1,
-             "test check/1: big-num: Num.check(999999999) == :odd": 1,
-             "test context": 1,
-             "test prove with different operators \"abcd\" =~ \"bc\"": 1,
-             "test prove with different operators identity(5) != 1": 1,
-             "test prove with different operators identity(5) !== 1": 1,
-             "test prove with different operators identity(5) < 10": 1,
-             "test prove with different operators identity(5) <= 5": 1,
-             "test prove with different operators identity(5) == 5": 1,
-             "test prove with different operators identity(5) === 5": 1,
-             "test prove with different operators identity(5) > 1": 1,
-             "test prove with different operators identity(5) >= 5": 1
-           ]
-  end
+  # TODO
+  # test "context" do
+  #   assert __MODULE__.__info__(:functions) == [
+  #            __ex_unit__: 0,
+  #            __ex_unit__: 2,
+  #            "test batch/2 all together now can I have a little more? identity(5) > 4": 1,
+  #            "test batch/2 all together now identity(5) > 1": 1,
+  #            "test batch/2 all together now identity(5) > 2": 1,
+  #            "test batch/2 all together now identity(5) > 3": 1,
+  #            "test batch/2 one identity(5) > 1": 1,
+  #            "test check/1: Num.check(-1) == :neg": 1,
+  #            "test check/1: Num.check(0) == :zero": 1,
+  #            "test check/1: Num.check(1) == :odd": 1,
+  #            "test check/1: Num.check(2) == :even": 1,
+  #            "test check/1: big-num: Num.check(999999999) == :odd": 1,
+  #            "test context": 1,
+  #            "test prove with different operators \"abcd\" =~ \"bc\"": 1,
+  #            "test prove with different operators identity(5) != 1": 1,
+  #            "test prove with different operators identity(5) !== 1": 1,
+  #            "test prove with different operators identity(5) < 10": 1,
+  #            "test prove with different operators identity(5) <= 5": 1,
+  #            "test prove with different operators identity(5) == 5": 1,
+  #            "test prove with different operators identity(5) === 5": 1,
+  #            "test prove with different operators identity(5) > 1": 1,
+  #            "test prove with different operators identity(5) >= 5": 1
+  #          ]
+  # end
 end
