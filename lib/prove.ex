@@ -152,7 +152,26 @@ defmodule Prove do
   @doc """
   Creates a batch of proves.
 
-  The `description` is added to every `prove` in the `batch`.
+  A batch adds the `description` to every `prove`. This can be used to
+  group`proves`s with a context. Every prove is still an own `test`.
+
+  Code like:
+  ```
+  batch "valid" do
+    prove 1 == 1
+    prove "really", 2 == 2
+  end
+  ```
+  is equivalent to:
+  ```
+  test "valid (1)" do
+    assert 1 == 1
+  end
+
+  test "valid really (1)" do
+    assert 2 == 2
+  end
+  ```
   """
   defmacro batch(description, do: {:__block__, _meta, block}) do
     {:__block__, [], quote_block(description, block, __CALLER__)}

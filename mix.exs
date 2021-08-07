@@ -6,7 +6,7 @@ defmodule Prove.MixProject do
   def project do
     [
       app: :prove,
-      version: "0.1.2",
+      version: "0.1.3",
       elixir: "~> 1.10",
       name: "Prove",
       description: description(),
