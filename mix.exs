@@ -7,7 +7,7 @@ defmodule Prove.MixProject do
     [
       app: :prove,
       version: "0.1.3",
-      elixir: "~> 1.10",
+      elixir: "~> 1.11",
       name: "Prove",
       description: description(),
       start_permanent: Mix.env() == :prod,
