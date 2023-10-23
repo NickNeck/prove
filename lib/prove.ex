@@ -234,12 +234,15 @@ defmodule Prove do
   defp quote_assertion({op, meta, [left, right]} = expr) do
     {marker, _meta, children} =
       quote do
-        unless unquote(expr) do
+        left = unquote(left)
+        right = unquote(right)
+
+        unless apply(Kernel, unquote(op), [left, right]) do
           raise ExUnit.AssertionError,
             expr: unquote(Macro.escape(expr)),
             message: "Prove with #{to_string(unquote(op))} failed",
-            left: unquote(left),
-            right: unquote(right)
+            left: left,
+            right: right
         end
       end
 
