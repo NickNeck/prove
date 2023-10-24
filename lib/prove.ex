@@ -214,7 +214,9 @@ defmodule Prove do
        when is_binary(description) and operator in @operators do
     assertion = quote_assertion(expr)
 
-    quote bind_quoted: [
+    quote generated: true,
+          location: :keep,
+          bind_quoted: [
             assertion: Macro.escape(assertion),
             description: description,
             file: file,
