@@ -105,7 +105,7 @@ defmodule Prove do
 
   """
 
-  @operators [:==, :!=, :===, :!==, :<=, :>=, :<, :>, :=~]
+  @operator [:==, :<, :>, :<=, :>=, :===, :=~, :!==, :!=, :in]
 
   @doc """
   A macro to write simple a simple test shorter.
@@ -137,7 +137,7 @@ defmodule Prove do
   defmacro prove(description \\ "", expr)
 
   defmacro prove(description, {operator, _, [_, _]} = expr)
-           when is_binary(description) and operator in @operators do
+           when is_binary(description) and operator in @operator do
     quote_prove(
       update_description(description, __CALLER__),
       expr,
@@ -211,11 +211,12 @@ defmodule Prove do
          {operator, _meta, [_, _]} = expr,
          %{module: mod, file: file, line: line}
        )
-       when is_binary(description) and operator in @operators do
+       when is_binary(description) and operator in @operator do
     assertion = quote_assertion(expr)
 
     quote generated: true,
-          location: :keep,
+          file: file,
+          line: line,
           bind_quoted: [
             assertion: Macro.escape(assertion),
             description: description,
@@ -228,27 +229,26 @@ defmodule Prove do
       def unquote(name)(_) do
         unquote(assertion)
       rescue
-        error in [ExUnit.AssertionError] -> reraise(error, __STACKTRACE__)
+        error in [ExUnit.AssertionError] ->
+          reraise(error, __STACKTRACE__)
       end
     end
   end
 
-  defp quote_assertion({op, meta, [left, right]} = expr) do
-    {marker, _meta, children} =
-      quote do
-        left = unquote(left)
-        right = unquote(right)
+  defp quote_assertion({operator, _meta, [left, right]} = expr) do
+    expr = Macro.escape(expr)
 
-        unless apply(Kernel, unquote(op), [left, right]) do
-          raise ExUnit.AssertionError,
-            expr: unquote(Macro.escape(expr)),
-            message: "Prove with #{to_string(unquote(op))} failed",
-            left: left,
-            right: right
-        end
-      end
+    quote do
+      left = unquote(left)
+      right = unquote(right)
 
-    {marker, meta, children}
+      ExUnit.Assertions.assert(Kernel.apply(Kernel, unquote(operator), [left, right]),
+        left: left,
+        right: right,
+        expr: unquote(expr),
+        message: "Prove with #{to_string(unquote(operator))} failed"
+      )
+    end
   end
 
   defp update_description(description, caller) do

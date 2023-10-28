@@ -2,16 +2,19 @@ defmodule Prove.MixProject do
   use Mix.Project
 
   @github "https://github.com/hrzndhrn/prove"
+  @version "0.1.7"
+  @description "Prove provides the macros `prove` and `batch` to write simple tests shorter."
 
   def project do
     [
       app: :prove,
-      version: "0.1.5",
+      version: @version,
       elixir: "~> 1.11",
       name: "Prove",
-      description: description(),
+      description: @description,
+      source_url: @github,
       start_permanent: Mix.env() == :prod,
-      source_url: "https://github.com/hrzndhrn/prove",
+      docs: docs(),
       package: package(),
       deps: deps()
     ]
@@ -24,6 +27,14 @@ defmodule Prove.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Prove",
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
 
