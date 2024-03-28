@@ -9,7 +9,7 @@ defmodule Prove.MixProject do
     [
       app: :prove,
       version: @version,
-      elixir: "~> 1.11",
+      elixir: "~> 1.12",
       name: "Prove",
       description: @description,
       source_url: @github,
